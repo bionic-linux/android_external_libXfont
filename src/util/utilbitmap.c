@@ -27,6 +27,8 @@ in this Software without prior written authorization from The Open Group.
 */
 /* $XFree86: xc/lib/font/util/utilbitmap.c,v 1.4 2001/01/17 19:43:34 dawes Exp $ */
 
+#ifndef USE_INTERNAL_FREETYPE
+
 /*
  * Author:  Keith Packard, MIT X Consortium
  */
@@ -181,3 +183,6 @@ RepadBitmap (char *pSrc, char *pDst,
     }
     return dstWidthBytes * height;
 }
+
+#endif /* !USE_INTERNAL_FREETYPE */
+

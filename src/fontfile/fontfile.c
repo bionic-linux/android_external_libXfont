@@ -1,4 +1,4 @@
-/* $XdotOrg: xc/lib/font/fontfile/fontfile.c,v 1.1.4.3 2003/12/06 13:24:23 kaleb Exp $ */
+/* $XdotOrg: xc/lib/font/fontfile/fontfile.c,v 1.2 2004/04/23 18:44:21 eich Exp $ */
 /* $Xorg: fontfile.c,v 1.4 2001/02/09 02:04:03 xorgcvs Exp $ */
 
 /*
