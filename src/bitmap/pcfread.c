@@ -908,7 +908,6 @@ pmfReadFont(FontPtr pFont, FontFilePtr file,
 	if (IS_EOF(file)) goto Bail;
 	if (encodingOffset == 0xFFFF) {
 	    pFont->info.allExist = FALSE;
-	    encoding[i] = 0;
 	} else {
             if(!encoding[SEGMENT_MAJOR(i)]) {
                 encoding[SEGMENT_MAJOR(i)]=
