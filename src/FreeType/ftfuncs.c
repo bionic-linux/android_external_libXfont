@@ -25,7 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-/* $XdotOrg: xc/lib/font/FreeType/ftfuncs.c,v 1.1.4.4.2.3 2004/03/26 20:09:05 eich Exp $ */
+/* $XdotOrg: xc/lib/font/FreeType/ftfuncs.c,v 1.1.4.4.2.2.6.2 2004/04/12 12:20:51 gisburn Exp $ */
 
 /* $XFree86: xc/lib/font/FreeType/ftfuncs.c,v 1.43 2004/02/07 04:37:18 dawes Exp $ */
 
@@ -122,7 +122,7 @@ static char *xlfd_props[] = {
 
 
 static int ftypeInitP = 0;      /* is the engine initialised? */
-static FT_Library ftypeLibrary;
+FT_Library ftypeLibrary;
 
 static FTFacePtr faceTable[NUMFACEBUCKETS];
 
