@@ -1,4 +1,4 @@
-/* $XdotOrg: fontfile.c,v 1.4 2001/02/09 02:04:03 xorgcvs Exp $ */
+/* $XdotOrg: xc/lib/font/fontfile/fontfile.c,v 1.1.4.4 2004/02/23 21:34:47 kaleb Exp $ */
 /* $Xorg: fontfile.c,v 1.4 2001/02/09 02:04:03 xorgcvs Exp $ */
 
 /*
@@ -26,7 +26,7 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 
 */
-/* $XFree86: xc/lib/font/fontfile/fontfile.c,v 3.21 2003/12/02 19:50:40 dawes Exp $ */
+/* $XFree86: xc/lib/font/fontfile/fontfile.c,v 3.22 2004/02/11 21:11:20 dawes Exp $ */
 
 /*
  * Author:  Keith Packard, MIT X Consortium
@@ -424,11 +424,16 @@ FontFileOpenFont (pointer client, FontPathElementPtr fpe, Mask flags,
 		    vals.ranges = ranges;
 		    vals.nranges = nranges;
 
-		    strcpy (fileName, dir->directory);
-		    strcat (fileName, scalable->fileName);
-		    ret = (*scalable->renderer->OpenScalable) (fpe, pFont,
+		    if (strlen(dir->directory) + strlen(scalable->fileName) >=
+			sizeof(fileName)) {
+			ret = BadFontName;
+		    } else {
+			strcpy (fileName, dir->directory);
+			strcat (fileName, scalable->fileName);
+			ret = (*scalable->renderer->OpenScalable) (fpe, pFont,
 			   flags, entry, fileName, &vals, format, fmask,
 			   non_cachable_font);
+		    }
 
 		    /* In case rasterizer does something bad because of
 		       charset subsetting... */
@@ -499,6 +504,8 @@ FontFileOpenBitmapNCF (FontPathElementPtr fpe, FontPtr *pFont,
     bitmap = &entry->u.bitmap;
     if(!bitmap || !bitmap->renderer->OpenBitmap)
         return BadFontName;
+    if (strlen(dir->directory) + strlen(bitmap->fileName) >= sizeof(fileName))
+	return BadFontName;
     strcpy (fileName, dir->directory);
     strcat (fileName, bitmap->fileName);
     ret = (*bitmap->renderer->OpenBitmap) 
@@ -533,6 +540,8 @@ FontFileGetInfoBitmap (FontPathElementPtr fpe, FontInfoPtr pFontInfo,
     dir = (FontDirectoryPtr) fpe->private;
     bitmap = &entry->u.bitmap;
     if (!bitmap || !bitmap->renderer->GetInfoBitmap)
+	return BadFontName;
+    if (strlen(dir->directory) + strlen(bitmap->fileName) >= sizeof(fileName))
 	return BadFontName;
     strcpy (fileName, dir->directory);
     strcat (fileName, bitmap->fileName);
@@ -873,10 +882,15 @@ FontFileListOneFontWithInfo (pointer client, FontPathElementPtr fpe,
 	    bc = &entry->u.bc;
 	    entry = bc->entry;
 	    /* Make a new scaled instance */
-    	    strcpy (fileName, dir->directory);
-    	    strcat (fileName, scalable->fileName);
-	    ret = (*scalable->renderer->GetInfoScalable)
+	    if (strlen(dir->directory) + strlen(scalable->fileName) >=
+		sizeof(fileName)) {
+		ret = BadFontName;
+	    } else {
+		strcpy (fileName, dir->directory);
+		strcat (fileName, scalable->fileName);
+		ret = (*scalable->renderer->GetInfoScalable)
 		    (fpe, *pFontInfo, entry, tmpName, fileName, &bc->vals);
+	    }
 	    break;
 #endif
 	default:
@@ -981,10 +995,15 @@ FontFileListOneFontWithInfo (pointer client, FontPathElementPtr fpe,
 		    vals.nranges = nranges;
 		    
 		    /* Make a new scaled instance */
-	    	    strcpy (fileName, dir->directory);
-	    	    strcat (fileName, scalable->fileName);
-	    	    ret = (*scalable->renderer->GetInfoScalable)
-			(fpe, *pFontInfo, entry, &tmpName, fileName, &vals);
+		    if (strlen(dir->directory) + strlen(scalable->fileName) >=
+			sizeof(fileName)) {
+			ret = BadFontName;
+		    } else {
+			strcpy (fileName, dir->directory);
+			strcat (fileName, scalable->fileName);
+			ret = (*scalable->renderer->GetInfoScalable)
+			    (fpe, *pFontInfo, entry, &tmpName, fileName, &vals);
+		    }
 		    if (ranges) xfree(ranges);
 		}
 	    }

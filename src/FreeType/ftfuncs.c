@@ -26,8 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-/* $XdotOrg: xc/lib/font/FreeType/ftfuncs.c,v 1.1.4.2 2003/12/06 13:24:22 kaleb Exp $ */
-/* $XFree86: xc/lib/font/FreeType/ftfuncs.c,v 1.39 2003/12/17 18:14:40 dawes Exp $ */
+/* $XFree86: xc/lib/font/FreeType/ftfuncs.c,v 1.43 2004/02/07 04:37:18 dawes Exp $ */
 
 #include "fontmisc.h"
 
@@ -90,6 +89,8 @@ THE SOFTWARE.
 
 /* Does the X accept noSuchChar? */
 #define X_ACCEPTS_NO_SUCH_CHAR
+/* Does the XAA accept NULL noSuchChar.bits?(dangerous) */
+/* #define XAA_ACCEPTS_NULL_BITS */
 
 #ifdef X_ACCEPTS_NO_SUCH_CHAR
 static CharInfoRec noSuchChar = { /* metrics */{0,0,0,0,0,0},
@@ -612,6 +613,13 @@ FreeTypeInstanceGetGlyph(unsigned idx, int flags, CharInfoPtr *g, FTInstancePtr 
     xrc = FreeTypeRasteriseGlyph(idx, flags, 
 				 &(*glyphs)[segment][offset], instance, 
 				 (*available)[segment][offset] >= FT_AVAILABLE_METRICS);
+    if(xrc != Successful && (*available)[segment][offset] >= FT_AVAILABLE_METRICS) {
+	ErrorF("Warning: FreeTypeRasteriseGlyph() returns an error,\n");
+	ErrorF("\tso the backend tries to set a white space.\n");
+	xrc = FreeTypeRasteriseGlyph(idx, flags | FT_GET_DUMMY,
+				     &(*glyphs)[segment][offset], instance,
+				     (*available)[segment][offset] >= FT_AVAILABLE_METRICS);
+    }
     if(xrc == Successful) {
         (*available)[segment][offset] = FT_AVAILABLE_RASTERISED;
 	/* return the glyph */
@@ -1277,6 +1285,8 @@ FreeTypeFreeFont(FTFontPtr font)
     FreeTypeFreeInstance(font->instance);
     if(font->ranges)
         xfree(font->ranges);
+    if(font->dummy_char.bits)
+	xfree(font->dummy_char.bits);
     xfree(font);
 }
 
@@ -1494,9 +1504,17 @@ FreeTypeAddProperties(FTFontPtr font, FontScalablePtr vals, FontInfoPtr info,
         i++;
     }
 
-    j = FTGetEnglishName(face->face, TT_NAME_ID_PS_NAME,
+    vp = (char *)FT_Get_Postscript_Name(face->face);
+    if (vp) {
+	j = strlen(vp);
+    } else {
+	j = -1;
+    }
+    if (j < 0) {
+	j = FTGetEnglishName(face->face, TT_NAME_ID_PS_NAME,
                          val, MAXFONTNAMELEN);
-    vp = val;
+	vp = val;
+    }
     if (j < 0) {
         if(t1info && t1info->full_name) {
             vp = t1info->full_name;
@@ -2948,7 +2966,6 @@ FreeTypeLoadXFont(char *fileName,
 	if(!face->bitmap) {
 	    int new_width;
 	    double ratio,force_c_ratio;
-	    double b_width_diagonal;
 	    double width_x=0,width_y=0;
 	    double force_c_width_x, force_c_rsb_x, force_c_lsb_x;
 	    double tmp_rsb,tmp_lsb,tmp_asc,tmp_des;
@@ -2961,16 +2978,13 @@ FreeTypeLoadXFont(char *fileName,
 	    tmp_rsb = face->face->bbox.xMax;
 	    if ( tmp_rsb < face->face->max_advance_width ) tmp_rsb = face->face->max_advance_width;
 	    /* apply scaleBBoxWidth */
-	    /* we should not ...???
+	    /* we should not ...??? */
 	    tmp_lsb *= ins_ttcap->scaleBBoxWidth;
 	    tmp_rsb *= ins_ttcap->scaleBBoxWidth;
-	    */
 	    /* transform and rescale */
 	    compute_new_extents( vals, scale, tmp_lsb, tmp_rsb, tmp_des, tmp_asc,
 				 &minLsb, &maxRsb, &descent, &ascent );
 	    /* */
-	    b_width_diagonal = (tmp_rsb - tmp_lsb) /* face->face->max_advance_width */
-			       * vals->pixel_matrix[0] * scale;
 	    /* Consider vertical layouts */
 	    if( 0 < face->face->max_advance_height )
 		max_advance_height = face->face->max_advance_height;
@@ -3455,7 +3469,33 @@ FreeTypeGetGlyphs(FontPtr pFont, unsigned long count, unsigned char *chars,
             *gp++ = g;
         }
 #ifdef X_ACCEPTS_NO_SUCH_CHAR
-	else *gp++ = &noSuchChar;
+	else {
+#ifdef XAA_ACCEPTS_NULL_BITS
+	    *gp++ = &noSuchChar;
+#else
+	    if ( tf->dummy_char.bits ) {
+		*gp++ = &tf->dummy_char;
+	    }
+	    else {
+		char *raster = NULL;
+		int wd_actual, ht_actual, wd, ht, bpr;
+		wd_actual = tf->info->maxbounds.rightSideBearing - tf->info->maxbounds.leftSideBearing;
+		ht_actual = tf->info->maxbounds.ascent + tf->info->maxbounds.descent;
+		if(wd_actual <= 0) wd = 1;
+		else wd=wd_actual;
+		if(ht_actual <= 0) ht = 1;
+		else ht=ht_actual;
+		bpr = (((wd + (tf->instance->bmfmt.glyph<<3) - 1) >> 3) & 
+		       -tf->instance->bmfmt.glyph);
+		raster = (char*)xalloc(ht * bpr);
+		if(raster) {
+		    memset(raster, 0, ht * bpr);
+		    tf->dummy_char.bits = raster;
+		    *gp++ = &tf->dummy_char;
+		}
+	    }
+#endif
+	}
 #endif
     }
     
