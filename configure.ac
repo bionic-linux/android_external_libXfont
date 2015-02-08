@@ -229,5 +229,7 @@ AC_CONFIG_FILES([Makefile
 		src/fc/Makefile
 		src/util/Makefile
 		src/stubs/Makefile
+		test/Makefile
+		test/utils/Makefile
 		xfont.pc])
 AC_OUTPUT
