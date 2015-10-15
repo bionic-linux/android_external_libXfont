@@ -113,7 +113,6 @@ AC_SUBST(FREETYPE_REQUIRES)
 #	Builtins (gzipped pcf format in .text segment)
 #	PCF
 #	BDF
-#	SNF
 #
 
 AC_DEFINE(X_GZIP_FONT_COMPRESSION,1,[Support gzip for bitmap fonts])
@@ -163,16 +162,6 @@ AC_ARG_ENABLE(bdfformat,
 AM_CONDITIONAL(XFONT_BDFFORMAT, [test "x$XFONT_BDFFORMAT" = xyes])
 if test "x$XFONT_BDFFORMAT" = xyes; then
 	AC_DEFINE(XFONT_BDFFORMAT,1,[Support bdf format bitmap font files])
-	XFONT_BITMAP=yes
-fi
-
-AC_ARG_ENABLE(snfformat,
-	AS_HELP_STRING([--enable-snfformat],
-		[Support SNF format bitmap fonts (default: disabled)]),
-	[XFONT_SNFFORMAT=$enableval], [XFONT_SNFFORMAT=no])
-AM_CONDITIONAL(XFONT_SNFFORMAT, [test "x$XFONT_SNFFORMAT" = xyes])
-if test "x$XFONT_SNFFORMAT" = xyes; then
-	AC_DEFINE(XFONT_SNFFORMAT,1,[Support snf format bitmap font files])
 	XFONT_BITMAP=yes
 fi
 

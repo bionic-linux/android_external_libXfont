@@ -126,11 +126,6 @@ if XFONT_PCFFORMAT
 libXfont2_la_SOURCES += src/bitmap/pcfwrite.c
 endif
 
-if XFONT_SNFFORMAT
-libXfont2_la_SOURCES +=			\
-	src/bitmap/snfread.c		\
-	src/bitmap/snfstr.h
-endif
 endif
 
 if XFONT_BUILTINS
