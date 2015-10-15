@@ -81,11 +81,6 @@ extern int bitmapGetMetrics ( FontPtr pFont, unsigned long count,
 			      unsigned char *chars, FontEncoding charEncoding,
 			      unsigned long *glyphCount, xCharInfo **glyphs );
 
-extern void bitmapComputeFontBounds ( FontPtr pFont );
-extern void bitmapComputeFontInkBounds ( FontPtr pFont );
-extern Bool bitmapAddInkMetrics ( FontPtr pFont );
-extern int bitmapComputeWeight ( FontPtr pFont );
-
 extern void BitmapRegisterFontFileFunctions ( void );
 
 extern int BitmapOpenScalable ( FontPathElementPtr fpe, FontPtr *pFont,

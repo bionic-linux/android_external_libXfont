@@ -112,7 +112,6 @@ AC_SUBST(FREETYPE_REQUIRES)
 # Bitmap fonts in files:
 #	Builtins (gzipped pcf format in .text segment)
 #	PCF
-#	BDF
 #
 
 AC_DEFINE(X_GZIP_FONT_COMPRESSION,1,[Support gzip for bitmap fonts])
@@ -154,16 +153,6 @@ fi
 
 AM_CONDITIONAL(XFONT_PCF_OR_BUILTIN,
 	[test "x$XFONT_PCFFORMAT" = xyes -o "x$XFONT_BUILTINS" = xyes])
-
-AC_ARG_ENABLE(bdfformat,
-	AS_HELP_STRING([--disable-bdfformat],
-		[Support BDF format bitmap fonts (default: enabled)]),
-	[XFONT_BDFFORMAT=$enableval], [XFONT_BDFFORMAT=yes])
-AM_CONDITIONAL(XFONT_BDFFORMAT, [test "x$XFONT_BDFFORMAT" = xyes])
-if test "x$XFONT_BDFFORMAT" = xyes; then
-	AC_DEFINE(XFONT_BDFFORMAT,1,[Support bdf format bitmap font files])
-	XFONT_BITMAP=yes
-fi
 
 AM_CONDITIONAL(XFONT_BITMAP, [test "x$XFONT_BITMAP" = xyes ])
 if test "x$XFONT_BITMAP" = xyes; then

@@ -26,7 +26,6 @@ libXfontinclude_HEADERS = \
 	include/X11/fonts/libxfont2.h
 
 noinst_HEADERS = \
-	include/X11/fonts/bdfint.h   \
 	include/X11/fonts/bitmap.h   \
 	include/X11/fonts/bufio.h    \
 	include/X11/fonts/fntfil.h   \
@@ -108,15 +107,7 @@ if XFONT_BITMAP
 libXfont2_la_SOURCES +=			\
 	src/bitmap/bitmap.c		\
 	src/bitmap/bitmapfunc.c		\
-	src/bitmap/bitmaputil.c		\
-	src/bitmap/bitscale.c		\
-	src/bitmap/fontink.c
-
-if XFONT_BDFFORMAT
-libXfont2_la_SOURCES +=			\
-	src/bitmap/bdfread.c		\
-	src/bitmap/bdfutils.c
-endif
+	src/bitmap/bitscale.c
 
 if XFONT_PCF_OR_BUILTIN
 libXfont2_la_SOURCES += src/bitmap/pcfread.c
