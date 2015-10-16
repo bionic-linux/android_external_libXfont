@@ -110,7 +110,7 @@ AC_SUBST(FREETYPE_REQUIRES)
 
 #
 # Bitmap fonts in files:
-#	Builtins (gzipped pcf format in .text segment)
+#	Builtins (pcf format in .rodata segment)
 #	PCF
 #
 

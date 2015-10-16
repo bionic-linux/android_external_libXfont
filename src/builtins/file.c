@@ -95,7 +95,7 @@ BuiltinFileOpen (const char *name)
 {
     int		    i;
     BuiltinIOPtr    io;
-    BufFilePtr	    raw, cooked;
+    BufFilePtr	    raw;
 
     if (*name == '/') name++;
     for (i = 0; i < builtin_files_count; i++)
@@ -114,13 +114,8 @@ BuiltinFileOpen (const char *name)
 	free (io);
 	return NULL;
     }
-    if ((cooked = BufFilePushZIP (raw)))
-	raw = cooked;
-    else
-    {
-	raw->left += raw->bufp - raw->buffer;
-	raw->bufp = raw->buffer;
-    }
+    raw->left += raw->bufp - raw->buffer;
+    raw->bufp = raw->buffer;
     return (FontFilePtr) raw;
 }
 
