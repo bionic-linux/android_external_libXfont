@@ -47,7 +47,7 @@ from The Open Group.
 #include <stdint.h>
 #include <string.h>
 
-void
+static void
 pcfError(const char* message, ...)
 {
     va_list args;

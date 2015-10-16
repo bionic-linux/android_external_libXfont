@@ -43,7 +43,6 @@ typedef struct _buffile {
     int     eof;
     BufChar buffer[BUFFILESIZE];
     int	    (*input)( BufFilePtr /* f */);
-    int     (*output)( int /* c */, BufFilePtr /* f */);
     int	    (*skip)( BufFilePtr /* f */, int /* count */);
     int	    (*close)( BufFilePtr /* f */, int /* doClose */);
     char    *private;
@@ -52,17 +51,13 @@ typedef struct _buffile {
 extern BufFilePtr BufFileCreate (
     char*,
     int (*)(BufFilePtr),
-    int (*)(int, BufFilePtr),
     int (*)(BufFilePtr, int),
     int (*)(BufFilePtr, int));
 extern BufFilePtr BufFileOpenRead ( int );
-extern BufFilePtr BufFileOpenWrite ( int );
 extern int BufFileClose ( BufFilePtr, int );
 extern int BufFileRead ( BufFilePtr, char*, int );
-extern int BufFileWrite ( BufFilePtr, const char*, int );
 
 #define BufFileGet(f)	((f)->left-- ? *(f)->bufp++ : ((f)->eof = (*(f)->input) (f)))
-#define BufFilePut(c,f)	(--(f)->left ? *(f)->bufp++ = ((unsigned char)(c)) : (*(f)->output) ((unsigned char)(c),f))
 #define BufFileSkip(f,c)    ((f)->eof = (*(f)->skip) (f, c))
 
 #ifndef TRUE

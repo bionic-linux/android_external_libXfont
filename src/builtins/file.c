@@ -108,7 +108,7 @@ BuiltinFileOpen (const char *name)
 	return NULL;
     io->offset = 0;
     io->file = (void *) &builtin_files[i];
-    raw = BufFileCreate ((char *) io, BuiltinFill, 0, BuiltinSkip, BuiltinClose);
+    raw = BufFileCreate ((char *) io, BuiltinFill, BuiltinSkip, BuiltinClose);
     if (!raw)
     {
 	free (io);

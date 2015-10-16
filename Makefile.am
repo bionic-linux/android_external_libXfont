@@ -72,7 +72,6 @@ libXfont2_la_SOURCES +=			\
 	src/fontfile/defaults.c		\
 	src/fontfile/dirfile.c		\
 	src/fontfile/fileio.c		\
-	src/fontfile/filewr.c		\
 	src/fontfile/fontdir.c		\
 	src/fontfile/fontfile.c		\
 	src/fontfile/fontscale.c	\
@@ -103,10 +102,6 @@ libXfont2_la_SOURCES +=			\
 
 if XFONT_PCF_OR_BUILTIN
 libXfont2_la_SOURCES += src/bitmap/pcfread.c
-endif
-
-if XFONT_PCFFORMAT
-libXfont2_la_SOURCES += src/bitmap/pcfwrite.c
 endif
 
 endif
