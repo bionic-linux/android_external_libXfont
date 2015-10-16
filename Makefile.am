@@ -31,7 +31,6 @@ noinst_HEADERS = \
 	include/X11/fonts/fntfil.h   \
 	include/X11/fonts/fntfilio.h \
 	include/X11/fonts/fntfilst.h \
-	include/X11/fonts/fontencc.h \
 	include/X11/fonts/fontmisc.h \
 	include/X11/fonts/fontshow.h \
 	include/X11/fonts/fontutil.h \
@@ -76,7 +75,6 @@ libXfont2_la_SOURCES +=			\
 	src/fontfile/fileio.c		\
 	src/fontfile/filewr.c		\
 	src/fontfile/fontdir.c		\
-	src/fontfile/fontencc.c		\
 	src/fontfile/fontfile.c		\
 	src/fontfile/fontscale.c	\
 	src/fontfile/gunzip.c		\
