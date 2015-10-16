@@ -59,13 +59,6 @@ static int BitmapGetRenderIndex(FontRendererPtr renderer);
 static BitmapFileFunctionsRec readers[] = {
 #if XFONT_PCFFORMAT
     { pcfReadFont, pcfReadFontInfo} ,
-    { pcfReadFont, pcfReadFontInfo} ,
-# ifdef X_GZIP_FONT_COMPRESSION
-    { pcfReadFont, pcfReadFontInfo} ,
-# endif
-# ifdef X_BZIP2_FONT_COMPRESSION
-    { pcfReadFont, pcfReadFontInfo} ,
-# endif
 #endif
 };
 
@@ -143,21 +136,6 @@ static FontRendererRec	renderers[] = {
     { ".pcf", 4, BitmapOpenBitmap, BitmapOpenScalable,
 	BitmapGetInfoBitmap, BitmapGetInfoScalable, 0,
 	CAPABILITIES },
-    { ".pcf.Z", 6, BitmapOpenBitmap, BitmapOpenScalable,
-	BitmapGetInfoBitmap, BitmapGetInfoScalable, 0,
-	CAPABILITIES },
-# ifdef X_GZIP_FONT_COMPRESSION
-    { ".pcf.gz", 7,
-	BitmapOpenBitmap, BitmapOpenScalable,
-	BitmapGetInfoBitmap, BitmapGetInfoScalable, 0,
-	CAPABILITIES },
-# endif
-# ifdef X_BZIP2_FONT_COMPRESSION
-    { ".pcf.bz2", 8,
-	BitmapOpenBitmap, BitmapOpenScalable,
-	BitmapGetInfoBitmap, BitmapGetInfoScalable, 0,
-	CAPABILITIES },
-# endif
 #endif
 };
 

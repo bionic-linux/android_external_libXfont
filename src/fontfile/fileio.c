@@ -48,8 +48,7 @@ FontFilePtr
 FontFileOpen (const char *name)
 {
     int		fd;
-    int		len;
-    BufFilePtr	raw, cooked;
+    BufFilePtr	raw;
 
     fd = open (name, O_BINARY|O_CLOEXEC|O_NOFOLLOW);
     if (fd < 0)
@@ -59,33 +58,6 @@ FontFileOpen (const char *name)
     {
 	close (fd);
 	return 0;
-    }
-    len = strlen (name);
-    if (len > 2 && !strcmp (name + len - 2, ".Z")) {
-	cooked = BufFilePushCompressed (raw);
-	if (!cooked) {
-	    BufFileClose (raw, TRUE);
-	    return 0;
-	}
-	raw = cooked;
-#ifdef X_GZIP_FONT_COMPRESSION
-    } else if (len > 3 && !strcmp (name + len - 3, ".gz")) {
-	cooked = BufFilePushZIP (raw);
-	if (!cooked) {
-	    BufFileClose (raw, TRUE);
-	    return 0;
-	}
-	raw = cooked;
-#endif
-#ifdef X_BZIP2_FONT_COMPRESSION
-    } else if (len > 4 && !strcmp (name + len - 4, ".bz2")) {
-	cooked = BufFilePushBZIP2 (raw);
-	if (!cooked) {
-	    BufFileClose (raw, TRUE);
-	    return 0;
-	}
-	raw = cooked;
-#endif
     }
     return (FontFilePtr) raw;
 }

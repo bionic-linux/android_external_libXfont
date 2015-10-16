@@ -114,23 +114,6 @@ AC_SUBST(FREETYPE_REQUIRES)
 #	PCF
 #
 
-AC_DEFINE(X_GZIP_FONT_COMPRESSION,1,[Support gzip for bitmap fonts])
-X_GZIP_FONT_COMPRESSION=1
-AC_SUBST(X_GZIP_FONT_COMPRESSION)
-AC_CHECK_LIB(z, gzopen, [Z_LIBS=-lz], AC_MSG_ERROR([*** zlib is required]))
-
-AC_ARG_WITH(bzip2,
-	AS_HELP_STRING([--with-bzip2],
-	  [Use libbz2 to support bzip2 compressed bitmap fonts (default: no)]),
-	[], [with_bzip2=no])
-if test "x$with_bzip2" = xyes; then
-	AC_CHECK_LIB(bz2, BZ2_bzopen, [Z_LIBS="$Z_LIBS -lbz2"],
-		AC_MSG_ERROR([*** libbz2 is required for bzip2 support]))
-	AC_DEFINE(X_BZIP2_FONT_COMPRESSION,1,[Support bzip2 for bitmap fonts])
-fi
-AM_CONDITIONAL(X_BZIP2_FONT_COMPRESSION, [test "x$with_bzip2" = xyes ])
-AC_SUBST(Z_LIBS)
-
 AC_ARG_ENABLE(builtins,
 	AS_HELP_STRING([--disable-builtins],
 		[Support builtin fonts (default: enabled)]),

@@ -69,7 +69,6 @@ if XFONT_FONTFILE
 libXfont2_la_SOURCES +=			\
 	src/fontfile/bitsource.c	\
 	src/fontfile/bufio.c		\
-	src/fontfile/decompress.c	\
 	src/fontfile/defaults.c		\
 	src/fontfile/dirfile.c		\
 	src/fontfile/fileio.c		\
@@ -77,14 +76,9 @@ libXfont2_la_SOURCES +=			\
 	src/fontfile/fontdir.c		\
 	src/fontfile/fontfile.c		\
 	src/fontfile/fontscale.c	\
-	src/fontfile/gunzip.c		\
 	src/fontfile/register.c		\
 	src/fontfile/renderers.c	\
 	src/fontfile/catalogue.c
-
-if X_BZIP2_FONT_COMPRESSION
-libXfont2_la_SOURCES += src/fontfile/bunzip2.c
-endif
 endif
 
 if XFONT_FREETYPE
