@@ -474,7 +474,7 @@ FreeTypeOpenInstance(FTInstancePtr *instance_return, FTFacePtr face,
     if( FT_IS_SFNT( face->face ) ) {
 #if 1
         FT_F26Dot6  tt_char_width, tt_char_height, tt_dim_x, tt_dim_y;
-        FT_UInt     nn;
+        FT_Int     nn;
 
         instance->strike_index=0xFFFFU;
 
@@ -1454,7 +1454,7 @@ FreeTypeRasteriseGlyph(unsigned idx, int flags, CharInfoPtr tgp,
 	}
 	for( i = MAX(0, dy) ; i<ht ; i++ ){
 	    int prev_jj,jj;
-	    if( bitmap->rows <= i-dy ) break;
+	    if( bitmap->rows <= (unsigned) (i-dy) ) break;
 	    current_buffer=(unsigned char *)(bitmap->buffer+bitmap->pitch*(i-dy));
 	    current_raster=(unsigned char *)(raster+i*bpr);
 	    j       = MAX(0,div_dx);
@@ -2985,13 +2985,13 @@ ft_compute_bounds(FTFontPtr font, FontInfoPtr pinfo, FontScalablePtr vals )
           c = row<<8|col;
           flags=0;
           if ( !force_c_outside ) {
-              if ( c <= instance->ttcap.forceConstantSpacingEnd
-		   && instance->ttcap.forceConstantSpacingBegin <= c )
+	      if ( (signed) c <= instance->ttcap.forceConstantSpacingEnd
+		   && instance->ttcap.forceConstantSpacingBegin <= (signed) c )
                   flags|=FT_FORCE_CONSTANT_SPACING;
           }
           else {        /* for GB18030 proportional */
-              if ( c <= instance->ttcap.forceConstantSpacingEnd
-		   || instance->ttcap.forceConstantSpacingBegin <= c )
+              if ( (signed) c <= instance->ttcap.forceConstantSpacingEnd
+		   || instance->ttcap.forceConstantSpacingBegin <= (signed) c )
                   flags|=FT_FORCE_CONSTANT_SPACING;
           }
 #if 0
