@@ -3907,7 +3907,19 @@ static int num_renderers = sizeof(renderers) / sizeof(renderers[0]);
 static FontRendererRec alt_renderers[] = {
     {".bdf", 4, 0, FreeTypeOpenScalable, 0,
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".bdf.Z", 6, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".bdf.gz", 7, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".bdf.bz2", 8, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
     {".pcf", 4, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".pcf.Z", 6, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".pcf.gz", 7, 0, FreeTypeOpenScalable, 0,
+     FreeTypeGetInfoScalable, 0, CAPABILITIES},
+    {".pcf.bz2", 8, 0, FreeTypeOpenScalable, 0,
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
 };
 
