@@ -69,7 +69,7 @@ static int FontFileOpenBitmapNCF (FontPathElementPtr fpe, FontPtr *pFont,
 				  fsBitmapFormatMask fmask,
 				  FontPtr non_cachable_font);
 
-int
+static int
 FontFileNameCheck (const char *name)
 {
 #ifndef NCD
@@ -107,7 +107,7 @@ FontFileInitFPE (FontPathElementPtr fpe)
 }
 
 /* ARGSUSED */
-int
+static int
 FontFileResetFPE (FontPathElementPtr fpe)
 {
     FontDirectoryPtr	dir;
@@ -1066,7 +1066,7 @@ FontFileListNextFontWithInfo(pointer client, FontPathElementPtr fpe,
     return ret;
 }
 
-int
+static int
 FontFileStartListFontsAndAliases(pointer client, FontPathElementPtr fpe,
 				 const char *pat, int len, int max,
 				 pointer *privatep)

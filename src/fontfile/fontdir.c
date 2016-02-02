@@ -41,7 +41,7 @@ in this Software without prior written authorization from The Open Group.
 #define INT32_MAX 0x7fffffff
 #endif
 
-Bool
+static Bool
 FontFileInitTable (FontTablePtr table, int size)
 {
     if (size < 0 || (size > INT32_MAX/sizeof(FontEntryRec)))
@@ -60,7 +60,7 @@ FontFileInitTable (FontTablePtr table, int size)
     return TRUE;
 }
 
-void
+static void
 FontFileFreeEntry (FontEntryPtr entry)
 {
     FontScalableExtraPtr   extra;
@@ -92,7 +92,7 @@ FontFileFreeEntry (FontEntryPtr entry)
     }
 }
 
-void
+static void
 FontFileFreeTable (FontTablePtr table)
 {
     int	i;
@@ -168,7 +168,7 @@ FontFileFreeDir (FontDirectoryPtr dir)
     free(dir);
 }
 
-FontEntryPtr
+static FontEntryPtr
 FontFileAddEntry(FontTablePtr table, FontEntryPtr prototype)
 {
     FontEntryPtr    entry;
@@ -249,7 +249,7 @@ FontFileNameCompare(const void* a, const void* b)
     return strcmpn(a_name->name.name, b_name->name.name);
 }
 
-void
+static void
 FontFileSortTable (FontTablePtr table)
 {
     if (!table->sorted) {
@@ -433,14 +433,6 @@ FontFileCountDashes (char *name, int namelen)
     return ndashes;
 }
 
-/* exported in public API in <X11/fonts/fntfil.h> */
-char *
-FontFileSaveString (char *s)
-{
-    return strdup(s);
-}
-#define FontFileSaveString(s) strdup(s)
-
 FontEntryPtr
 FontFileFindNameInScalableDir(FontTablePtr table, FontNamePtr pat,
 			      FontScalablePtr vals)
@@ -581,15 +573,6 @@ FontFileFindNamesInScalableDir(FontTablePtr table, FontNamePtr pat, int max,
     return ret;
 }
 
-int
-FontFileFindNamesInDir(FontTablePtr table, FontNamePtr pat,
-		       int max, FontNamesPtr names)
-{
-    return FontFileFindNamesInScalableDir(table, pat, max, names,
-					  (FontScalablePtr)0,
-					  NORMAL_ALIAS_BEHAVIOR, (int *)0);
-}
-
 Bool
 FontFileMatchName(char *name, int length, FontNamePtr pat)
 {
@@ -686,7 +669,7 @@ FontFileAddFontFile (FontDirectoryPtr dir, char *fontName, char *fileName)
 	entry.type = FONT_ENTRY_BITMAP;
 	entry.u.bitmap.renderer = renderer;
 	entry.u.bitmap.pFont = NullFont;
-	if (!(entry.u.bitmap.fileName = FontFileSaveString (fileName)))
+	if (!(entry.u.bitmap.fileName = strdup (fileName)))
 	    return FALSE;
 	if (!(bitmap = FontFileAddEntry (&dir->nonScalable, &entry)))
 	{
@@ -719,7 +702,7 @@ FontFileAddFontFile (FontDirectoryPtr dir, char *fontName, char *fileName)
 		    existing->u.scalable.extra->defaults = vals;
 
 		    free (existing->u.scalable.fileName);
-		    if (!(existing->u.scalable.fileName = FontFileSaveString (fileName)))
+		    if (!(existing->u.scalable.fileName = strdup (fileName)))
 			return FALSE;
 		}
                 if(bitmap)
@@ -731,7 +714,7 @@ FontFileAddFontFile (FontDirectoryPtr dir, char *fontName, char *fileName)
                 }
 	    }
 	}
-	if (!(entry.u.scalable.fileName = FontFileSaveString (fileName)))
+	if (!(entry.u.scalable.fileName = strdup (fileName)))
 	    return FALSE;
 	extra = malloc (sizeof (FontScalableExtraRec));
 	if (!extra)
@@ -818,7 +801,7 @@ FontFileAddFontAlias (FontDirectoryPtr dir, char *aliasName, char *fontName)
     entry.name.name = aliasName;
     entry.name.ndashes = FontFileCountDashes (entry.name.name, entry.name.length);
     entry.type = FONT_ENTRY_ALIAS;
-    if (!(entry.u.alias.resolved = FontFileSaveString (fontName)))
+    if (!(entry.u.alias.resolved = strdup (fontName)))
 	return FALSE;
     if (!FontFileAddEntry (&dir->nonScalable, &entry))
     {

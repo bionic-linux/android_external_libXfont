@@ -72,9 +72,7 @@ typedef struct _FontRenderer	    *FontRendererPtr;
 #define FontAliasFile	    "fonts.alias"
 #define FontScalableFile    "fonts.scale"
 
-extern int FontFileNameCheck ( const char *name );
 extern int FontFileInitFPE ( FontPathElementPtr fpe );
-extern int FontFileResetFPE ( FontPathElementPtr fpe );
 extern int FontFileFreeFPE ( FontPathElementPtr fpe );
 extern int FontFileOpenFont ( pointer client, FontPathElementPtr fpe,
 			      Mask flags, const char *name, int namelen,
@@ -101,10 +99,6 @@ extern int FontFileListNextFontWithInfo ( pointer client,
 					  char **namep, int *namelenp,
 					  FontInfoPtr *pFontInfo,
 					  int *numFonts, pointer private );
-extern int FontFileStartListFontsAndAliases ( pointer client,
-					      FontPathElementPtr fpe,
-					      const char *pat, int len, int max,
-					      pointer *privatep );
 extern int FontFileListNextFontOrAlias ( pointer client,
 					 FontPathElementPtr fpe,
 					 char **namep, int *namelenp,
@@ -114,8 +108,6 @@ extern void FontFileRegisterLocalFpeFunctions ( void );
 extern void CatalogueRegisterLocalFpeFunctions ( void );
 
 
-extern FontEntryPtr FontFileAddEntry ( FontTablePtr table,
-				       FontEntryPtr prototype );
 extern Bool FontFileAddFontAlias ( FontDirectoryPtr dir, char *aliasName,
 				   char *fontName );
 extern Bool FontFileAddFontFile ( FontDirectoryPtr dir, char *fontName,
@@ -126,8 +118,6 @@ extern FontEntryPtr FontFileFindNameInDir ( FontTablePtr table,
 extern FontEntryPtr FontFileFindNameInScalableDir ( FontTablePtr table,
 						    FontNamePtr pat,
 						    FontScalablePtr vals );
-extern int FontFileFindNamesInDir ( FontTablePtr table, FontNamePtr pat,
-				    int max, FontNamesPtr names );
 extern int FontFileFindNamesInScalableDir ( FontTablePtr table,
 					    FontNamePtr pat, int max,
 					    FontNamesPtr names,
@@ -135,14 +125,9 @@ extern int FontFileFindNamesInScalableDir ( FontTablePtr table,
 					    int alias_behavior, int *newmax );
 
 extern void FontFileFreeDir ( FontDirectoryPtr dir );
-extern void FontFileFreeEntry ( FontEntryPtr entry );
-extern void FontFileFreeTable ( FontTablePtr table );
-extern Bool FontFileInitTable ( FontTablePtr table, int size );
 extern FontDirectoryPtr FontFileMakeDir ( const char *dirName, int size );
 extern Bool FontFileMatchName ( char *name, int length, FontNamePtr pat );
-extern char * FontFileSaveString ( char *s );
 extern void FontFileSortDir ( FontDirectoryPtr dir );
-extern void FontFileSortTable ( FontTablePtr table );
 
 extern void FontDefaultFormat ( int *bit, int *byte, int *glyph, int *scan );
 
