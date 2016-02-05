@@ -27,7 +27,6 @@
 #include "libxfontint.h"
 #include    <X11/fonts/fntfilst.h>
 #include    <X11/fonts/fontutil.h>
-#include    <X11/fonts/pcf.h>
 #include    "builtin.h"
 
 static int
@@ -35,56 +34,14 @@ BuiltinOpenBitmap (FontPathElementPtr fpe, FontPtr *ppFont, int	flags,
 		   FontEntryPtr entry, char *fileName, fsBitmapFormat format,
 		   fsBitmapFormatMask fmask, FontPtr unused)
 {
-    FontFilePtr	file;
-    FontPtr     pFont;
-    int         ret;
-    int         bit,
-                byte,
-                glyph,
-                scan,
-		image;
-
-    file = BuiltinFileOpen (fileName);
-    if (!file)
-	return BadFontName;
-    pFont = malloc(sizeof(FontRec));
-    if (!pFont) {
-	BuiltinFileClose (file, 0);
-	return AllocError;
-    }
-    /* set up default values */
-    FontDefaultFormat(&bit, &byte, &glyph, &scan);
-    /* get any changes made from above */
-    ret = CheckFSFormat(format, fmask, &bit, &byte, &scan, &glyph, &image);
-
-    /* Fill in font record. Data format filled in by reader. */
-    pFont->refcnt = 0;
-    pFont->maxPrivate = -1;
-    pFont->devPrivates = (pointer *) 0;
-
-    ret = pcfReadFont (pFont, file, bit, byte, glyph, scan);
-
-    BuiltinFileClose (file, 0);
-    if (ret != Successful)
-	free(pFont);
-    else
-	*ppFont = pFont;
-    return ret;
+    return BadFontName;
 }
 
 static int
 BuiltinGetInfoBitmap (FontPathElementPtr fpe, FontInfoPtr pFontInfo,
 		      FontEntryPtr entry, char *fileName)
 {
-    FontFilePtr file;
-    int		ret;
-
-    file = BuiltinFileOpen (fileName);
-    if (!file)
-	return BadFontName;
-    ret = pcfReadFontInfo (pFontInfo, file);
-    BuiltinFileClose (file, 0);
-    return ret;
+    return BadFontName;
 }
 
 static int

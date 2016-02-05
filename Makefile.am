@@ -110,7 +110,6 @@ if XFONT_BUILTINS
 libXfont2_la_SOURCES +=			\
 	src/builtins/builtin.h		\
 	src/builtins/dir.c		\
-	src/builtins/file.c		\
 	src/builtins/fonts.c		\
 	src/builtins/fpe.c		\
 	src/builtins/render.c
