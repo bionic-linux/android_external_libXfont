@@ -132,8 +132,6 @@ extern void FontFileSortDir ( FontDirectoryPtr dir );
 extern void FontDefaultFormat ( int *bit, int *byte, int *glyph, int *scan );
 
 extern Bool FontFileRegisterRenderer ( FontRendererPtr renderer );
-extern Bool FontFilePriorityRegisterRenderer ( FontRendererPtr renderer,
-                                               int priority );
 extern FontRendererPtr FontFileMatchRenderer ( char *fileName );
 
 extern Bool FontFileAddScaledInstance ( FontEntryPtr entry,

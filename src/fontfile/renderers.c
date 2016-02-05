@@ -45,12 +45,6 @@ static unsigned long rendererGeneration = 0;
 Bool
 FontFileRegisterRenderer (FontRendererPtr renderer)
 {
-    return FontFilePriorityRegisterRenderer(renderer, 0);
-}
-
-Bool
-FontFilePriorityRegisterRenderer (FontRendererPtr renderer, int priority)
-{
     int		    i;
     struct _FontRenderersElement *new;
 
@@ -62,33 +56,15 @@ FontFilePriorityRegisterRenderer (FontRendererPtr renderer, int priority)
 	renderers.renderers = NULL;
     }
 
-    for (i = 0; i < renderers.number; i++) {
-	if (!strcasecmp (renderers.renderers[i].renderer->fileSuffix,
-                         renderer->fileSuffix)) {
-            if(renderers.renderers[i].priority >= priority) {
-                if(renderers.renderers[i].priority == priority) {
-                    if (rendererGeneration == 1)
-                        ErrorF("Warning: font renderer for \"%s\" "
-                               "already registered at priority %d\n",
-                               renderer->fileSuffix, priority);
-                }
-                return TRUE;
-            } else {
-                break;
-            }
-        }
-    }
+    i = renderers.number;
+    new = realloc (renderers.renderers, sizeof(*new) * (i + 1));
+    if (!new)
+	return FALSE;
+    renderers.renderers = new;
+    renderers.number = i + 1;
 
-    if(i >= renderers.number) {
-        new = realloc (renderers.renderers, sizeof(*new) * (i + 1));
-        if (!new)
-            return FALSE;
-        renderers.renderers = new;
-        renderers.number = i + 1;
-    }
     renderer->number = i;
     renderers.renderers[i].renderer = renderer;
-    renderers.renderers[i].priority = priority;
     return TRUE;
 }
 

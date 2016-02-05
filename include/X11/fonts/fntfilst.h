@@ -160,10 +160,7 @@ typedef struct _FontRenderer {
 typedef struct _FontRenders {
     int		    number;
     struct _FontRenderersElement {
-        /* In order to preserve backward compatibility, the
-           priority field is made invisible to renderers */
         FontRendererPtr renderer;
-        int priority;
     } *renderers;
 } FontRenderersRec, *FontRenderersPtr;
 

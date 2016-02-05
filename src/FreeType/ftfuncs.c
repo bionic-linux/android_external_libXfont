@@ -3901,10 +3901,6 @@ static FontRendererRec renderers[] = {
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
     {".pfb", 4, 0, FreeTypeOpenScalable, 0,
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
-};
-static int num_renderers = sizeof(renderers) / sizeof(renderers[0]);
-
-static FontRendererRec alt_renderers[] = {
     {".bdf", 4, 0, FreeTypeOpenScalable, 0,
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
     {".bdf.Z", 6, 0, FreeTypeOpenScalable, 0,
@@ -3923,9 +3919,7 @@ static FontRendererRec alt_renderers[] = {
      FreeTypeGetInfoScalable, 0, CAPABILITIES},
 };
 
-static int num_alt_renderers =
-sizeof(alt_renderers) / sizeof(alt_renderers[0]);
-
+static int num_renderers = sizeof(renderers) / sizeof(renderers[0]);
 
 void
 FreeTypeRegisterFontFileFunctions(void)
@@ -3934,7 +3928,4 @@ FreeTypeRegisterFontFileFunctions(void)
 
     for (i = 0; i < num_renderers; i++)
         FontFileRegisterRenderer(&renderers[i]);
-
-    for (i = 0; i < num_alt_renderers; i++)
-        FontFilePriorityRegisterRenderer(&alt_renderers[i], -10);
 }
