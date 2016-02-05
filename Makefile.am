@@ -26,9 +26,7 @@ libXfontinclude_HEADERS = \
 	include/X11/fonts/libxfont2.h
 
 noinst_HEADERS = \
-	include/X11/fonts/bufio.h    \
 	include/X11/fonts/fntfil.h   \
-	include/X11/fonts/fntfilio.h \
 	include/X11/fonts/fntfilst.h \
 	include/X11/fonts/fontmisc.h \
 	include/X11/fonts/fontshow.h \
@@ -66,10 +64,8 @@ libXfont2_la_LIBADD = $(Z_LIBS) $(MATH_LIBS) $(XFONT_LIBS)
 if XFONT_FONTFILE
 libXfont2_la_SOURCES +=			\
 	src/fontfile/bitsource.c	\
-	src/fontfile/bufio.c		\
 	src/fontfile/defaults.c		\
 	src/fontfile/dirfile.c		\
-	src/fontfile/fileio.c		\
 	src/fontfile/fontdir.c		\
 	src/fontfile/fontfile.c		\
 	src/fontfile/fontscale.c	\
