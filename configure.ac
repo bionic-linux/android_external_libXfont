@@ -108,12 +108,6 @@ AC_SUBST(FREETYPE_LIBS)
 AC_SUBST(FREETYPE_CFLAGS)
 AC_SUBST(FREETYPE_REQUIRES)
 
-#
-# Bitmap fonts in files:
-#	Builtins (pcf format in .rodata segment)
-#	PCF
-#
-
 AC_ARG_ENABLE(builtins,
 	AS_HELP_STRING([--disable-builtins],
 		[Support builtin fonts (default: enabled)]),
@@ -121,26 +115,6 @@ AC_ARG_ENABLE(builtins,
 AM_CONDITIONAL(XFONT_BUILTINS, [test "x$XFONT_BUILTINS" = xyes ])
 if test "x$XFONT_BUILTINS" = xyes; then
 	AC_DEFINE(XFONT_BUILTINS,1,[Support built-in fonts])
-	XFONT_BITMAP=yes
-fi
-
-AC_ARG_ENABLE(pcfformat,
-	AS_HELP_STRING([--disable-pcfformat],
-		[Support PCF format bitmap fonts (default: enabled)]),
-	[XFONT_PCFFORMAT=$enableval], [XFONT_PCFFORMAT=yes])
-AM_CONDITIONAL(XFONT_PCFFORMAT, [test "x$XFONT_PCFFORMAT" = xyes])
-if test "x$XFONT_PCFFORMAT" = xyes; then
-	AC_DEFINE(XFONT_PCFFORMAT,1,[Support pcf format bitmap font files])
-	XFONT_BITMAP=yes
-fi
-
-AM_CONDITIONAL(XFONT_PCF_OR_BUILTIN,
-	[test "x$XFONT_PCFFORMAT" = xyes -o "x$XFONT_BUILTINS" = xyes])
-
-AM_CONDITIONAL(XFONT_BITMAP, [test "x$XFONT_BITMAP" = xyes ])
-if test "x$XFONT_BITMAP" = xyes; then
-	AC_DEFINE(XFONT_BITMAP,1,[Support bitmap font files])
-	XFONT_FONTFILE=yes
 fi
 
 AM_CONDITIONAL(XFONT_FONTFILE, [test "x$XFONT_FONTFILE" = xyes])

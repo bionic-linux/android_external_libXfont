@@ -34,7 +34,13 @@ in this Software without prior written authorization from The Open Group.
 #include "libxfontint.h"
 #include <X11/fonts/fntfilst.h>
 
-BitmapSourcesRec	FontFileBitmapSources;
+typedef struct _BitmapSources {
+    FontPathElementPtr	*fpe;
+    int			size;
+    int			count;
+} BitmapSourcesRec, *BitmapSourcesPtr;
+
+static BitmapSourcesRec	FontFileBitmapSources;
 
 Bool
 FontFileRegisterBitmapSource (FontPathElementPtr fpe)

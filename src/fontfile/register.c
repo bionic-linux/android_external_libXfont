@@ -26,14 +26,11 @@ in this Software without prior written authorization from The Open Group.
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-#else
-#define XFONT_BITMAP 1
 #endif
 #include "libxfontint.h"
 
 #include <X11/fonts/fontmisc.h>
 #include <X11/fonts/fntfilst.h>
-#include <X11/fonts/bitmap.h>
 
 /*
  * Translate monolithic build symbols to modular build symbols.
@@ -49,10 +46,6 @@ in this Software without prior written authorization from The Open Group.
 void
 FontFileRegisterFpeFunctions(void)
 {
-#ifdef XFONT_BITMAP
-    /* bitmap is always builtin to libXfont now */
-    BitmapRegisterFontFileFunctions ();
-#endif
 #ifdef XFONT_FREETYPE
     FreeTypeRegisterFontFileFunctions();
 #endif

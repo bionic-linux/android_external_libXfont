@@ -177,14 +177,6 @@ typedef struct _BitmapScalablePrivate {
     BitmapInstancePtr	instances;
 } BitmapScalablePrivateRec, *BitmapScalablePrivatePtr;
 
-typedef struct _BitmapSources {
-    FontPathElementPtr	*fpe;
-    int			size;
-    int			count;
-} BitmapSourcesRec, *BitmapSourcesPtr;
-
-extern BitmapSourcesRec	FontFileBitmapSources;
-
 /* Defines for FontFileFindNamesInScalableDir() behavior */
 #define NORMAL_ALIAS_BEHAVIOR		0
 #define LIST_ALIASES_AND_TARGET_NAMES   (1<<0)

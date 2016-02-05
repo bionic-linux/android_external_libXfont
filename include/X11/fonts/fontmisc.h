@@ -79,16 +79,6 @@ FourByteSwap(
     register int
 );
 
-extern int
-RepadBitmap (
-    char*,
-    char*,
-    unsigned,
-    unsigned,
-    int,
-    int
-);
-
 extern void CopyISOLatin1Lowered(
     char * /*dest*/,
     const char * /*source*/,
