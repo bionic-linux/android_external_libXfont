@@ -631,8 +631,8 @@ fs_get_reply (FSFpePtr conn, int *error)
      */
     if (rep->length > MAX_REPLY_LENGTH)
     {
-	ErrorF("fserve: reply length %d > MAX_REPLY_LENGTH, disconnecting"
-	       " from font server\n", rep->length);
+	ErrorF("fserve: reply length %ld > MAX_REPLY_LENGTH, disconnecting"
+	       " from font server\n", (long)rep->length);
 	_fs_connection_died (conn);
 	*error = FSIO_ERROR;
 	return 0;
