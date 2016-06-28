@@ -74,55 +74,6 @@ typedef struct TagSPropRecValListNodeP
   Tables
  */
 
-/* valid record field */
-static SPropertyRecord const validRecords[] =
-{
-    { "FontFile",               eRecTypeString  },
-    { "FaceNumber",             eRecTypeString },
-    { "AutoItalic",             eRecTypeDouble  },
-    { "DoubleStrike",           eRecTypeString  },
-    { "FontProperties",         eRecTypeBool    },
-    { "ForceSpacing",           eRecTypeString  },
-    { "ScaleBBoxWidth",         eRecTypeString  },
-    { "ScaleWidth",             eRecTypeDouble  },
-    { "EncodingOptions",        eRecTypeString  },
-    { "Hinting",                eRecTypeBool    },
-    { "VeryLazyMetrics",        eRecTypeBool    },
-    { "CodeRange",              eRecTypeString  },
-    { "EmbeddedBitmap",         eRecTypeString  },
-    { "VeryLazyBitmapWidthScale", eRecTypeDouble  },
-    { "ForceConstantSpacingCodeRange", eRecTypeString },
-    { "ForceConstantSpacingMetrics", eRecTypeString },
-    { "Dummy",                  eRecTypeVoid    }
-};
-static int const
-numOfValidRecords = sizeof(validRecords)/sizeof(validRecords[0]);
-
-/* correspondence between record name and cap variable name */
-static struct {
-    char const * capVariable;
-    char const * recordName;
-} const correspondRelations[] = {
-    { "fn", "FaceNumber" },
-    { "ai", "AutoItalic" },
-    { "ds", "DoubleStrike" },
-    { "fp", "FontProperties" },
-    { "fs", "ForceSpacing" },
-    { "bw", "ScaleBBoxWidth" },
-    { "sw", "ScaleWidth" },
-    { "eo", "EncodingOptions" },
-    { "vl", "VeryLazyMetrics" },
-    { "bs", "VeryLazyBitmapWidthScale" },
-    { "cr", "CodeRange" },
-    { "eb", "EmbeddedBitmap" },
-    { "hi", "Hinting" },
-    { "fc", "ForceConstantSpacingCodeRange" },
-    { "fm", "ForceConstantSpacingMetrics" }
-};
-static int const
-numOfCorrespondRelations
-= sizeof(correspondRelations)/sizeof(correspondRelations[0]);
-
 /**************************************************************************
   Functions
  */
@@ -132,6 +83,30 @@ static Bool /* True == Found, False == Not Found */
 get_record_type_by_name(SPropertyRecord const ** const refRefRecord, /*result*/
                         char const *strName)
 {
+    /* valid record field */
+    SPropertyRecord const validRecords[] =
+    {
+	{ "FontFile",               eRecTypeString  },
+	{ "FaceNumber",             eRecTypeString },
+	{ "AutoItalic",             eRecTypeDouble  },
+	{ "DoubleStrike",           eRecTypeString  },
+	{ "FontProperties",         eRecTypeBool    },
+	{ "ForceSpacing",           eRecTypeString  },
+	{ "ScaleBBoxWidth",         eRecTypeString  },
+	{ "ScaleWidth",             eRecTypeDouble  },
+	{ "EncodingOptions",        eRecTypeString  },
+	{ "Hinting",                eRecTypeBool    },
+	{ "VeryLazyMetrics",        eRecTypeBool    },
+	{ "CodeRange",              eRecTypeString  },
+	{ "EmbeddedBitmap",         eRecTypeString  },
+	{ "VeryLazyBitmapWidthScale", eRecTypeDouble  },
+	{ "ForceConstantSpacingCodeRange", eRecTypeString },
+	{ "ForceConstantSpacingMetrics", eRecTypeString },
+	{ "Dummy",                  eRecTypeVoid    }
+    };
+    int const numOfValidRecords =
+	sizeof(validRecords)/sizeof(validRecords[0]);
+
     Bool result = False;
     int i;
 
@@ -602,6 +577,30 @@ Bool /* True == Error, False == Success */
 SPropRecValList_add_by_font_cap(SDynPropRecValList *pThisList,
                                 char const *strCapHead)
 {
+    /* correspondence between record name and cap variable name */
+    struct {
+	char const * capVariable;
+	char const * recordName;
+    } const correspondRelations[] = {
+	{ "fn", "FaceNumber" },
+	{ "ai", "AutoItalic" },
+	{ "ds", "DoubleStrike" },
+	{ "fp", "FontProperties" },
+	{ "fs", "ForceSpacing" },
+	{ "bw", "ScaleBBoxWidth" },
+	{ "sw", "ScaleWidth" },
+	{ "eo", "EncodingOptions" },
+	{ "vl", "VeryLazyMetrics" },
+	{ "bs", "VeryLazyBitmapWidthScale" },
+	{ "cr", "CodeRange" },
+	{ "eb", "EmbeddedBitmap" },
+	{ "hi", "Hinting" },
+	{ "fc", "ForceConstantSpacingCodeRange" },
+	{ "fm", "ForceConstantSpacingMetrics" }
+    };
+    int const numOfCorrespondRelations
+    = sizeof(correspondRelations)/sizeof(correspondRelations[0]);
+
     Bool result = False;
     /*    SPropertyRecord const *refRecordType; */
     char const *term;
