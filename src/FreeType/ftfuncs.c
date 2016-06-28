@@ -93,26 +93,6 @@ static CharInfoRec noSuchChar = { /* metrics */{0,0,0,0,0,0},
 				  /* bits */   NULL };
 #endif
 
-/* The propery names for all the XLFD properties. */
-
-static const char *xlfd_props[] = {
-    "FOUNDRY",
-    "FAMILY_NAME",
-    "WEIGHT_NAME",
-    "SLANT",
-    "SETWIDTH_NAME",
-    "ADD_STYLE_NAME",
-    "PIXEL_SIZE",
-    "POINT_SIZE",
-    "RESOLUTION_X",
-    "RESOLUTION_Y",
-    "SPACING",
-    "AVERAGE_WIDTH",
-    "CHARSET_REGISTRY",
-    "CHARSET_ENCODING",
-};
-
-
 /* read 2-byte value from a SFNT table */
 static FT_UShort
 sfnt_get_ushort( FT_Face     face,
@@ -1568,6 +1548,23 @@ static int
 FreeTypeAddProperties(FTFontPtr font, FontScalablePtr vals, FontInfoPtr info,
                       char *fontname, int rawAverageWidth, Bool font_properties)
 {
+    /* The propery names for all the XLFD properties. */
+    const char *xlfd_props[] = {
+	"FOUNDRY",
+	"FAMILY_NAME",
+	"WEIGHT_NAME",
+	"SLANT",
+	"SETWIDTH_NAME",
+	"ADD_STYLE_NAME",
+	"PIXEL_SIZE",
+	"POINT_SIZE",
+	"RESOLUTION_X",
+	"RESOLUTION_Y",
+	"SPACING",
+	"AVERAGE_WIDTH",
+	"CHARSET_REGISTRY",
+	"CHARSET_ENCODING",
+    };
     int i, j, maxprops;
     char *sp, *ep, val[MAXFONTNAMELEN], *vp;
     FTFacePtr face;
