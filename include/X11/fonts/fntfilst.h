@@ -120,12 +120,8 @@ typedef struct _FontDirectory {
 /* Capability bits: for definition of capabilities bitmap in the
    FontRendererRec to indicate support of XLFD enhancements */
 
-#define CAP_MATRIX		0x1
-#define CAP_CHARSUBSETTING	0x2
-
 typedef struct _FontRenderer {
     const char    *fileSuffix;
-    int	    fileSuffixLen;
     int	    (*OpenBitmap)(FontPathElementPtr /* fpe */,
 			  FontPtr * /* pFont */,
 			  int /* flags */,
@@ -153,8 +149,6 @@ typedef struct _FontRenderer {
 			       FontNamePtr /* fontName */,
 			       char * /* fileName */,
 			       FontScalablePtr /* vals */);
-    int	    number;
-    int     capabilities;	/* Bitmap components defined above */
 } FontRendererRec;
 
 typedef struct _FontRenders {

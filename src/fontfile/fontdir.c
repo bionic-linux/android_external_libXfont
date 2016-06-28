@@ -452,28 +452,7 @@ FontFileFindNameInScalableDir(FontTablePtr table, FontNamePtr pat,
 	name = &table->entries[i].name;
 	res = PatternMatch(pat->name, private, name->name, name->ndashes);
 	if (res > 0)
-	{
-	    /* Check to see if enhancements requested are available */
-	    if (vals)
-	    {
-		int vs = vals->values_supplied;
-		int cap;
-
-		if (table->entries[i].type == FONT_ENTRY_SCALABLE)
-		    cap = table->entries[i].u.scalable.renderer->capabilities;
-		else if (table->entries[i].type == FONT_ENTRY_ALIAS)
-		    cap = ~0;	/* Calling code will have to see if true */
-		else
-		    cap = 0;
-		if ((((vs & PIXELSIZE_MASK) == PIXELSIZE_ARRAY ||
-		      (vs & POINTSIZE_MASK) == POINTSIZE_ARRAY) &&
-		     !(cap & CAP_MATRIX)) ||
-		    ((vs & CHARSUBSET_SPECIFIED) &&
-		     !(cap & CAP_CHARSUBSETTING)))
-		    continue;
-	    }
 	    return &table->entries[i];
-	}
 	if (res < 0)
 	    break;
     }
@@ -516,25 +495,6 @@ FontFileFindNamesInScalableDir(FontTablePtr table, FontNamePtr pat, int max,
     for (i = start, fname = &table->entries[start]; i < stop; i++, fname++) {
 	res = PatternMatch(pat->name, private, fname->name.name, fname->name.ndashes);
 	if (res > 0) {
-	    if (vals)
-	    {
-		int vs = vals->values_supplied;
-		int cap;
-
-		if (fname->type == FONT_ENTRY_SCALABLE)
-		    cap = fname->u.scalable.renderer->capabilities;
-		else if (fname->type == FONT_ENTRY_ALIAS)
-		    cap = ~0;	/* Calling code will have to see if true */
-		else
-		    cap = 0;
-		if ((((vs & PIXELSIZE_MASK) == PIXELSIZE_ARRAY ||
-		     (vs & POINTSIZE_MASK) == POINTSIZE_ARRAY) &&
-		    !(cap & CAP_MATRIX)) ||
-		    ((vs & CHARSUBSET_SPECIFIED) &&
-		    !(cap & CAP_CHARSUBSETTING)))
-		    continue;
-	    }
-
 	    if ((alias_behavior & IGNORE_SCALABLE_ALIASES) &&
 		fname->type == FONT_ENTRY_ALIAS)
 	    {

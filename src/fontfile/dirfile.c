@@ -226,7 +226,7 @@ AddFileNameAliases(FontDirectoryPtr dir)
 	if (!renderer)
 	    continue;
 
-	len = strlen (fileName) - renderer->fileSuffixLen;
+	len = strlen (fileName) - strlen(renderer->fileSuffix);
 	if (len >= sizeof(copy))
 	    continue;
 	CopyISOLatin1Lowered (copy, fileName, len);

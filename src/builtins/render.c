@@ -70,12 +70,12 @@ BuiltinGetInfoScalable (FontPathElementPtr fpe,
 }
 
 static FontRendererRec renderers[] = {
-    { ".builtin", 8,
+    { ".builtin",
     BuiltinOpenBitmap,
     BuiltinOpenScalable,
     BuiltinGetInfoBitmap,
     BuiltinGetInfoScalable,
-    0 }
+    }
 };
 
 #define numRenderers	(sizeof renderers / sizeof renderers[0])

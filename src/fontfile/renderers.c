@@ -63,7 +63,6 @@ FontFileRegisterRenderer (FontRendererPtr renderer)
     renderers.renderers = new;
     renderers.number = i + 1;
 
-    renderer->number = i;
     renderers.renderers[i].renderer = renderer;
     return TRUE;
 }
@@ -72,15 +71,16 @@ FontRendererPtr
 FontFileMatchRenderer (char *fileName)
 {
     int			i;
-    int			fileLen;
+    int			fileLen, suffixLen;
     FontRendererPtr	r;
 
     fileLen = strlen (fileName);
     for (i = 0; i < renderers.number; i++)
     {
 	r = renderers.renderers[i].renderer;
-	if (fileLen >= r->fileSuffixLen &&
-	    !strcasecmp (fileName + fileLen - r->fileSuffixLen, r->fileSuffix))
+	suffixLen = strlen(r->fileSuffix);
+	if (fileLen >= suffixLen &&
+	    !strcasecmp (fileName + fileLen - suffixLen, r->fileSuffix))
 	{
 	    return r;
 	}
