@@ -2851,7 +2851,7 @@ _fs_client_access (FSFpePtr conn, pointer client, Bool sync)
 	    authorizations = padding;
 	    authlen = 4;
 	}
-	crac.length = (sizeof (fsCreateACReq) + authlen) >> 2;
+	crac.length = (sizeof (fsCreateACReq) + authlen + 3) >> 2;
 	crac.acid = cur->acid;
 	_fs_add_req_log(conn, FS_CreateAC);
 	_fs_write(conn, (char *) &crac, sizeof (fsCreateACReq));
