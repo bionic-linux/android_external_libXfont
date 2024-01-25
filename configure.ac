@@ -70,6 +70,9 @@ AC_REPLACE_FUNCS([reallocarray realpath strlcat strlcpy])
 # Check for BSDish err.h
 AC_CHECK_HEADERS([err.h])
 
+# Checks for typedefs, structures, and compiler characteristics.
+AC_SYS_LARGEFILE
+
 #
 # select libraries to include
 #
