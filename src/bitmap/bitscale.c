@@ -41,10 +41,6 @@ from The Open Group.
 #include <X11/fonts/fontutil.h>
 #include <math.h>
 
-#ifndef MAX
-#define   MAX(a,b)    (((a)>(b)) ? a : b)
-#endif
-
 static void bitmapUnloadScalable (FontPtr pFont);
 static void ScaleBitmap ( FontPtr pFont, CharInfoPtr opci,
 			  CharInfoPtr pci, double *inv_xform,
