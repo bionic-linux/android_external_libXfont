@@ -295,10 +295,10 @@ if (m >= 1.0) { \
 /* don't need to favor enlargement when looking for bitmap that can
    be used unscalable */
 #define SCORE2(m,s) \
-if (m >= 1.0) \
-    score += (int)(((double)(8 * s)) / m); \
+if ((m) >= 1.0) \
+    score += (int)(((double)(8 * (s))) / (m));	\
 else \
-    score += (int)(((double)(8 * s)) * m);
+    score += (int)(((double)(8 * (s))) * (m));
 
 static FontEntryPtr
 FindBestToScale(FontPathElementPtr fpe, FontEntryPtr entry,
