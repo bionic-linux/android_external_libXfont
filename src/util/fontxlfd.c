@@ -42,12 +42,7 @@ from The Open Group.
 #include	<X11/Xos.h>
 #include	<math.h>
 #include	<stdlib.h>
-#if defined(sony) && !defined(SYSTYPE_SYSV) && !defined(_SYSTYPE_SYSV)
-#define NO_LOCALE
-#endif
-#ifndef NO_LOCALE
 #include	<locale.h>
-#endif
 #include	<ctype.h>
 #include	<stdio.h>	/* for sprintf() */
 #include	"src/util/replace.h"
@@ -70,9 +65,7 @@ GetInt(char *ptr, int *val)
 #define maxchar(p) ((p).max_char_low + ((p).max_char_high << 8))
 
 
-#ifndef NO_LOCALE
 static struct lconv *locale = 0;
-#endif
 static const char *radix = ".", *plus = "+", *minus = "-";
 
 static char *
@@ -80,7 +73,6 @@ readreal(char *ptr, double *result)
 {
     char buffer[80], *p1, *p2;
 
-#ifndef NO_LOCALE
     /* Figure out what symbols apply in this locale */
 
     if (!locale)
@@ -93,7 +85,6 @@ readreal(char *ptr, double *result)
 	if (locale->negative_sign && *locale->negative_sign)
 	    minus = locale->negative_sign;
     }
-#endif
     /* Copy the first 80 chars of ptr into our local buffer, changing
        symbols as needed. */
     for (p1 = ptr, p2 = buffer;
@@ -125,7 +116,6 @@ xlfd_double_to_text(double value, char *buffer, int space_required)
     int ndigits, exponent;
     const size_t buflen = XLFD_DOUBLE_TO_TEXT_BUF_SIZE;
 
-#ifndef NO_LOCALE
     if (!locale)
     {
 	locale = localeconv();
@@ -136,7 +126,6 @@ xlfd_double_to_text(double value, char *buffer, int space_required)
 	if (locale->negative_sign && *locale->negative_sign)
 	    minus = locale->negative_sign;
     }
-#endif
 
     if (space_required)
 	*buffer++ = ' ';
