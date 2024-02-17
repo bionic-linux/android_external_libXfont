@@ -67,8 +67,8 @@ AC_CHECK_FUNCS([poll readlink strlcat])
 AC_CONFIG_LIBOBJ_DIR([src/util])
 AC_REPLACE_FUNCS([reallocarray realpath strlcat strlcpy])
 
-# Check for BSDish err.h
-AC_CHECK_HEADERS([err.h])
+# Checks for header files.
+AC_CHECK_HEADERS([err.h float.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_SYS_LARGEFILE

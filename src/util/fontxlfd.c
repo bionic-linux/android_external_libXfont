@@ -183,12 +183,7 @@ xlfd_round_double(double x)
       significant digits.  How do you round to n significant digits on
       a binary machine?  */
 
-#if defined(i386) || defined(__i386__) || \
-    defined(ia64) || defined(__ia64__) || \
-    defined(__alpha__) || defined(__alpha) || \
-    defined(__hppa__) || \
-    defined(__amd64__) || defined(__amd64) || \
-    defined(sgi)
+#ifdef HAVE_FLOAT_H
 #include <float.h>
 
 /* if we have IEEE 754 fp, we can round to binary digits... */
@@ -249,7 +244,7 @@ xlfd_round_double(double x)
    }
    else
 #endif
-#endif /* i386 || __i386__ */
+#endif /* HAVE_FLOAT_H */
     {
 	/*
 	 * If not IEEE 754:  Let printf() do it for you.
