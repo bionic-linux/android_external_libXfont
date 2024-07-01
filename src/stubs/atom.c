@@ -188,8 +188,10 @@ __libxfont_internal__MakeAtom(const char *string, unsigned len, int makeit)
     a->hash = hash;
     if (hashUsed >= hashSize / 2) {
         if ((ResizeHashTable() == FALSE) &&
-	    ((hashTable == NULL) || (hashUsed == hashSize)))
+	    ((hashTable == NULL) || (hashUsed == hashSize))) {
+	    free(a);
 	    return None;
+        }
         h = hash & hashMask;
         if (hashTable[h]) {
             r = (hash % rehash) | 1;
